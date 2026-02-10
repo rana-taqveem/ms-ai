@@ -1,0 +1,30 @@
+1. Which search algorithm(s) perform better in terms of time efficiency (i.e., runs fastest)?
+Why?
+
+
+As per the below statistics, in this particular environment (a 20x20 Maze Search) BFS has shown the best performance, took under 1 ms to complete the search. 
+Next BFS is DFS at 1.3 ms. A* is the slowest and took more than 35ms on average. Although A* path length is exactly same as of BFS however since A* requires to do compute
+heuristics and path cost a each step, additionally Priority Queue also adds overhead (PQs have O(Log(n)) insertion time complextity)
+
+Algorithm: Depth-First Search (DFS)
+Execution Time: 0.0013 seconds
+Path Length: 53 steps
+Nodes Explored: 124 nodes
+-------------------------------------
+
+Algorithm: Breadth-First Search (BFS)
+Execution Time: 0.0006 seconds
+Path Length: 39 steps
+Nodes Explored: 396 nodes
+
+-------------------------------------
+
+Algorithm: A* Search
+Execution Time: 0.0397 seconds
+Path Length: 39 steps
+Nodes Explored: 240 nodes
+-------------------------------------
+
+2. Which search algorithm(s) is better in terms of returning the shortest path? Why?
+
+Both BFS and A* Star took the least and same number of steps to reach the goal. 

@@ -1,0 +1,63 @@
+in BFS or DFS search through a maze grid, is it possible that I have a corrdinate of grid in my path to goal but its not in the explored list? 
+
+Please donot provide any code or snippet during my queries
+
+so it means that If I check for goal with current cell before explanding the current cell it will not be added to explored, which logical.
+
+
+I know that for explored list we should use a set and not a list, however I have a specific need which requires me to use list for explored cells. If I use a separate set to track alredy eexplored cells, i believe it will not increase the space complexity significantly
+
+
+is appending the next cell to visited_list right after adding teh same cell to queue is logical right, isnt the in principal we should only mark a node as visited once you pop it from queue and now about to explore it?
+
+
+however I can see that appending to explored direclty after add to queue/stack vs appending to queue aftwards of dequeueing or pop result in diiferent set of explored nodes
+
+
+No on to A* search please donot provide an code, just help me understand the below:
+
+explain me formula the heuristic() function. For this map, you must implement the Haversine formula to calculate the straight-line distance. •Variables: φ is Latitude, λ is Longitude, and r is the Earth’s radius (6,371,000 meters). •Formula Steps: a = sin2 (∆φ 2 ) + cos(φ1) cos(φ2) sin2 (∆λ 2 ) c = 2 ·atan2 (√a,√1 −a) d = r ·c
+
+but please donot provide me the any code or solution.  just help me undersstand
+
+
+explain the object structure of MultidiGraph object of OpenStreetMap
+
+ImportError: scikit-learn must be installed as an optional dependency to search an unprojected graph.
+
+
+explain this 
+
+A NodeView of the Graph as G.nodes or G.nodes().
+Can be used as G.nodes for data lookup and for set-like operations. Can also be used as G.nodes(data='color', default=None) to return a NodeDataView which reports specific node data but no set operations. It presents a dict-like interface as well with G.nodes.items() iterating over (node, nodedata) 2-tuples and G.nodes[3]['foo'] providing the value of the foo attribute for node 3. In addition, a view G.nodes.data('foo') provides a dict-like interface to the foo attribute of each node. G.nodes.data('foo', default=1) provides a default for nodes that do not have attribute foo.
+Parameters
+* data : string or bool, optional (default=False) The node attribute returned in 2-tuple (n, ddict[data]). If True, return entire node attribute dict as (n, ddict). If False, return just the nodes n.
+* default : value, optional (default=None) Value used for nodes that don't have the requested attribute.  
+
+
+explain me the below output
+
+Neighbors of start node: [810005348] Edges from start node: [(810005319, 810005348, {'osmid': 67025896, 'highway': 'footway', 'oneway': False, 'reversed': False, 'length': np.float64(35.00540367698957)})]
+
+
+explain the error:
+Cell In[8], line 13 10 start_coords = graph.nodes[sse_node] 11 goal_coords = graph.nodes[sdsb_node] ---> 13 a_star_search(graph, sse_node, sdsb_node) 15 # --- TODO: CALL YOUR A* SEARCH ALGORITHM HERE --- 16 path = None Cell In[5], line 69 66 path.append(neighbor_node) 67 print(f"path: {list(path)}") ---> 69 heapq.heappush(priority_queue, (f_of_n, (successor_node, path))) 71 if not priority_queue: 72 print("No path to the goal exists.") TypeError: '<' not supported between instances of 'dict' and 'dict'
+
+
+your task is to explain me miniMax search in detail. please do not provide any code. Rather explain me the full concept and process, along, alpha beta pruning step by step, from the start state till the final state. When its is used and why?
+
+ok, first I am going to explin my understand: - First step is to produce a complete tree - all options from the current move or state till the terminal stage i.e where game ends. - Once we have the complete tree in memory do the following: - traverse the tree and reach a terminal node. - Execute a utility function to get a possible value for that terminal node. - I am not sure ow we will decide that which node will be min node and which will be max node, let suppose that the parent node at this stage is max node. - Assign the utility value to the max not, next explore all other children of max nodes, and complete their respective utility value. If we get any utility value to be < then current value assigned to Max node update the value of max node with new maximum. this way our max node will get maximum of utility value from all its children nodes. - Now the algo will travers back to the parent node of Max Node which will be a min node. - We will assign the value of Max node to min node first. - Then we will explore the other children of min node and repeat the above process to assign the max value to each of the children max nodes of the current min node. Once all the children max nodes have their respective values we will select the min from all the values and assign the min utility value to the Min node. - We will repeat this process utile we reach the root node (max node) representing the overall maximum utiltiy value. - I am not sure what this max value represent, however I can see that the path we traced back fom terminal nodes to root tells us that which path to follow to get the optimal result.
+
+not yet. so on each move, with out any caching or optimiztions we need to regenerate the whole tree again and recompute the utility values for each node?
+
+help me understand how to expand and build a tree in tictac from start to end
+
+will it be a separate tree at each move? cen you draw trees for me to understand like tree for move 1, then move 2 (opponents move) than 3 rd 
+
+yes please, and when building the tree when we kick of utility estimation and how?
+
+can I have it will all braches from start to may be next for move and what will be picture ot tree on each move?
+
+will we have just one tree or mulitple trees? like before first move we will have 9 trees? each processing a different game play? them after first move we select the tree machinf that state, then build 8 trees representing that state?
+
+should we know about the node type before the state goal comparison like before declaring a node as terminal, does it even matter?

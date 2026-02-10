@@ -1,0 +1,49 @@
+1. Which search algorithm(s) perform better in terms of time efficiency (i.e., runs fastest)?
+Why?
+
+Based on the stats below, DFS ended up exploring just 124 nodes, which is quite low compared to A*, which went through almost twice as many. BFS, on the other hand, 
+explored around three times more nodes than DFS did. Looking at execution time, DFS came out on top as the fastest, which makes sense since it explored the fewest nodes. 
+A* was only slightly slower, while BFS took the longest.
+
+However, even with the extra work A* does, like calculating cost and heuristic for each cell and managing everything through a priority queue—it still manages to be the 
+smartest overall choice for search in this case. Optimal path, reasonable speed, and less node exploration.
+
+
+2. Which search algorithm(s) is better in terms of returning the shortest path? Why?
+
+Shortest Path:
+when it comes to the actual number of steps in the final path, both BFS and A* needed about a third fewer steps than DFS. It suggests that although DFS found the goal quickly, 
+probably because the start and goal were located in a part of the tree that DFS reached early, the route it took was much longer overall.
+
+This clearly highlights that both A* and BFS returned more optimal paths. Between the two, A* stands out even more. It explored far fewer nodes than BFS while still 
+finding the same shortest path. That balance makes A* the most efficient option here. 
+
+Why?
+Why A* is most optimal, becasue it works differently. It calculates the distance as a heuristic, which helps it decide that exploring which which nodes will move it closer to the 
+goal at each step. It doesn’t waste time scanning the entire environment.
+
+This is very different from how BFS and DFS operate. They don't consider direction or distance. They’ll just keep going, one layer or branch at a time, until they either 
+stumble upon the goal or exhaust the space. If the goal happens to lie along a branch that BFS or DFS explores early, they might get lucky and reach it quickly. 
+But if it’s somewhere deeper or less obvious, they'll end up scanning the entire tree structure, which takes a lot more time and effort.
+
+Some stats
+--- Search Algorithm Statistics ---
+Algorithm: Depth-First Search (DFS)
+Execution Time: 0.0021 seconds
+Path Length: 53 steps
+Nodes Explored: 124 nodes
+-------------------------------------
+
+Algorithm: Breadth-First Search (BFS)
+Execution Time: 0.0031 seconds
+Path Length: 39 steps
+Nodes Explored: 396 nodes
+
+-------------------------------------
+
+--- Search Algorithm Statistics ---
+Algorithm: A* Search
+Execution Time: 0.0022 seconds
+Path Length: 39 steps
+Nodes Explored: 240 nodes
+-------------------------------------
