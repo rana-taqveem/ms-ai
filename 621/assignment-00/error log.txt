@@ -1,0 +1,58 @@
+Error log
+--- Creating mlops_db database
+--- Creating new file group t1_fg1 in mlops_db
+--- Creating new file group t1_fg2 in mlops_db
+--- Creating new file group t2_fg1 in mlops_db
+--- Creating new file group t2_fg2 in mlops_db
+--- Creating new file group t2_fg3 in mlops_db
+--- Adding File group 1, data file 1/2, volume v1
+Msg 5009, Level 16, State 1, Line 42
+One or more files listed in the statement could not be found or could not be initialized.
+Msg 5123, Level 16, State 1, Line 42
+CREATE FILE encountered operating system error 5(Access is denied.) while attempting to open or create the physical file '/user_data/v1/mlops_db_t1_fg1_f1.ndf'.
+--- File group 2, data file 1/2/3, volume v2
+Msg 5009, Level 16, State 1, Line 58
+One or more files listed in the statement could not be found or could not be initialized.
+Msg 5123, Level 16, State 1, Line 58
+CREATE FILE encountered operating system error 5(Access is denied.) while attempting to open or create the physical file '/user_data/v2/mlops_db_t1_fg2_f1.ndf'.
+--- File group 1, data file 1/2, volume v1
+Msg 5009, Level 16, State 1, Line 81
+One or more files listed in the statement could not be found or could not be initialized.
+Msg 5123, Level 16, State 1, Line 81
+CREATE FILE encountered operating system error 5(Access is denied.) while attempting to open or create the physical file '/user_data/v1/mlops_db_t2_fg1_f1.ndf'.
+---  File group 2, data file 1/2, volume v3
+Msg 5009, Level 16, State 1, Line 97
+One or more files listed in the statement could not be found or could not be initialized.
+Msg 5123, Level 16, State 1, Line 97
+CREATE FILE encountered operating system error 5(Access is denied.) while attempting to open or create the physical file '/user_data/v3/mlops_db_t2_fg2_f1.ndf'.
+---  File group 3, data file 1/2/3/4, volume v4
+Msg 5009, Level 16, State 1, Line 113
+One or more files listed in the statement could not be found or could not be initialized.
+Msg 5123, Level 16, State 1, Line 113
+CREATE FILE encountered operating system error 5(Access is denied.) while attempting to open or create the physical file '/user_data/v4/mlops_db_t2_fg3_f1.ndf'.
+--- Creating partion for customer_status
+--- Creating partion for vehicle_type
+--- Creating partion scheme for customer_status
+--- Creating partion scheme for vehicle_type
+--- Creating table -> customers
+--- Creating table -> vehicles
+--- Creating data into customers table
+Msg 622, Level 16, State 3, Line 191
+The filegroup "t1_fg1" has no files assigned to it. Tables, indexes, text columns, ntext columns, and image columns cannot be populated on this filegroup until a file is added.
+--- Creating data into vehicles table
+Msg 622, Level 16, State 3, Line 203
+The filegroup "t2_fg1" has no files assigned to it. Tables, indexes, text columns, ntext columns, and image columns cannot be populated on this filegroup until a file is added.
+--- Valiating partitions for customers table
+
+(4 rows affected)
+--- Valiating partitions for vehicles table
+
+(5 rows affected)
+--- Valiating partitions wise data count for customers table
+
+(0 rows affected)
+--- Valiating partitions wise data count for vehicles table
+
+(0 rows affected)
+
+Completion time: 2026-02-07T15:58:18.4225433+05:00

@@ -1,0 +1,25 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    container_name: mlops_sqlsrv2025
+
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=admin@12345
+      - MSSQL_PID=Developer
+      - MSSQL_TCP_PORT=1433
+    ports:
+      - "1433:1433"
+    volumes:
+      - primary_data:/var/opt/mssql
+      - data_v1:/user_data/v1
+      - data_v2:/user_data/v2
+      - data_v3:/user_data/v3
+      - data_v4:/user_data/v4
+
+volumes:
+  primary_data:
+  data_v1:
+  data_v2:
+  data_v3:
+  data_v4:
