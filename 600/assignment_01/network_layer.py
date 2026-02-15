@@ -15,9 +15,10 @@ class NetworkLayer:
         self.a = np.dot(self.X, self.w) + self.b
         return self.activation_function.forward(self.a)
     
-    def backward(self, gredient_last_layer: np.ndarray):  
+    def backward(self, gredient_last_layer: np.ndarray): 
+        N = self.X.shape[0] 
         d_activation = self.activation_function.backward(gredient_last_layer)
-        self.dw = np.dot(self.X.T, d_activation)
+        self.dw = np.dot(self.X.T, d_activation) / N
         self.db = np.sum(d_activation, axis=0, keepdims=True)
         dX = np.dot(d_activation, self.w.T)
         return dX

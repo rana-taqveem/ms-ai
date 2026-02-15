@@ -30,7 +30,7 @@ class NeuralNetwork:
         layer = NetworkLayer(w=W, b=b, num_of_neurons=num_of_neurons, activation_function=activation_function)
         self.layers.append(layer)
         
-    def forward(self, X):
+    def forward(self, X: np.ndarray):
         for layer in self.layers:
             X = layer.forward(X)
         return X
