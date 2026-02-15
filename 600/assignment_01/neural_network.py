@@ -23,9 +23,9 @@ class NeuralNetwork:
         else:
             W = np.random.randn(num_of_input_features, num_of_neurons) * np.sqrt(2.0 / num_of_input_features)
 
-        print(f'W shape: {W.shape}')
+        # print(f'W shape: {W.shape}')
         b = np.zeros((1,num_of_neurons))
-        print(f'b shape: {b.shape}')
+        # print(f'b shape: {b.shape}')
         
         layer = NetworkLayer(w=W, b=b, num_of_neurons=num_of_neurons, activation_function=activation_function)
         self.layers.append(layer)
@@ -48,6 +48,13 @@ class NeuralNetwork:
             
     def optimize(self):
         self.optimizer.take_step(self.layers)
+        
+    def evaluate(self, X, y):
+        y_hat = self.forward(X)
+        predictions = np.argmax(y_hat, axis=1)
+        labels = np.argmax(y, axis=1)
+        accuracy = np.mean(predictions == labels)
+        return accuracy
         
             
             

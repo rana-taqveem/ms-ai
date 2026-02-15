@@ -12,7 +12,8 @@ class NetworkLayer:
 
     def forward(self, X):
         self.X = X
-        return np.dot(self.X, self.w) + self.b
+        self.a = np.dot(self.X, self.w) + self.b
+        return self.activation_function.forward(self.a)
     
     def backward(self, gredient_last_layer: np.ndarray):  
         d_activation = self.activation_function.backward(gredient_last_layer)

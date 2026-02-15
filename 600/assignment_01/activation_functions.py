@@ -40,21 +40,28 @@ class Sigmoid(ActivationFunction):
 class Softmax(ActivationFunction):
     def __init__(self):
         super().__init__()
+        print('Initializing Softmax activation function.')
         self._forward_store: np.ndarray = np.array([])
         
     def forward(self, x: np.ndarray) -> np.ndarray:
-        
         x = x - np.max(x, axis=1, keepdims=True)
         e = np.exp(x)
         self._forward_store = e / np.sum(e, axis=1, keepdims=True)
+        # print(f'forward store shape: {self._forward_store.shape}')
+        # print(f'forward store: {self._forward_store}')
         return self._forward_store
     
     def backward(self, gradient_last_layer: np.ndarray) -> np.ndarray:
-        
         x = self._forward_store
+        # print(f'x shape: {x.shape}')
+        # print(f'gradient_last_layer shape: {gradient_last_layer.shape}')
+        
+        if x.shape != gradient_last_layer.shape:
+            raise ValueError(f'Shape mismatch: x shape {x.shape} and gradient_last_layer shape {gradient_last_layer.shape} must be the same.')
+        
+        
         wavg_last_gradient = np.sum(x * gradient_last_layer, axis=1, keepdims=True)
         return x * (gradient_last_layer - wavg_last_gradient)
-        
         
 
     def backward_jacobian(self, gradient_last_layer: np.ndarray) -> np.ndarray:
