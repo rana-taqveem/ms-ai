@@ -1,28 +1,22 @@
 import numpy as np
-from activation_frunctions import ActivationFunction
+from activation_functions import ActivationFunction
 class NetworkLayer:
-    def __init__(self, w, b, activation_function:ActivationFunction):
+    def __init__(self, w, b, num_of_neurons, activation_function:ActivationFunction):
         self.X = np.array([])
         self.w = w
         self.b = b
-        self.num_of_neurons = self.w.shape[1]
+        self.dw = np.array([])
+        self.db = np.array([])
+        self.num_of_neurons = num_of_neurons
         self.activation_function = activation_function
-        self._pre_activation_results: np.ndarray = np.array([])
-        self._post_activation_results: np.ndarray = np.array([])
 
     def forward(self, X):
         self.X = X
-        self._pre_activation_results = np.dot(self.X, self.w) + self.b
-        print(f'pre activation results: {self._pre_activation_results}')
-        print(f'pre activation results shape: {self._pre_activation_results.shape}')
-        self._post_activation_results = self.activation_function.forward(self._pre_activation_results) 
-        print(f'post activation results: {self._post_activation_results}')
-        print(f'post activation results shape: {self._post_activation_results.shape}')       
-        
-        return self._post_activation_results
+        return np.dot(self.X, self.w) + self.b
     
-    def get_post_activation_results(self):
-        return self._post_activation_results
-    
-    def get_pre_activation_results(self):
-        return self._pre_activation_results
+    def backward(self, gredient_last_layer: np.ndarray):  
+        d_activation = self.activation_function.backward(gredient_last_layer)
+        self.dw = np.dot(self.X.T, d_activation)
+        self.db = np.sum(d_activation, axis=0, keepdims=True)
+        dX = np.dot(d_activation, self.w.T)
+        return dX

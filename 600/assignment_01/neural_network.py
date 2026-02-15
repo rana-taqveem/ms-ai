@@ -1,14 +1,15 @@
 import numpy as np
-from activation_frunctions import ActivationFunction
 from network_layer import NetworkLayer  
+from activation_functions import ActivationFunction
 class NeuralNetwork:
     
-    def __init__(self, input_dimension): 
+    def __init__(self, input_dimension, loss_function, optimizer, weight_initializer=None): 
         self.input_dimension = input_dimension
-        self.layers = []
-        self._forward_pass_res = np.array([])
-        self._backward_pass_res= np.array([])
-        self._cross_entropy_loss = 0.0
+        self.loss_function = loss_function
+        self.optimizer = optimizer
+        self.weight_initializer = weight_initializer
+        
+        self.layers: list[NetworkLayer] = []
         
     def add_layer(self, num_of_neurons, activation_function:ActivationFunction):
         
@@ -17,24 +18,38 @@ class NeuralNetwork:
         else:
             num_of_input_features = self.layers[-1].num_of_neurons
             
-        W = np.random.randn(num_of_input_features, num_of_neurons) * np.sqrt(2.0 / num_of_input_features)
+        if self.weight_initializer is not None:
+            W = self.weight_initializer(num_of_input_features, num_of_neurons)
+        else:
+            W = np.random.randn(num_of_input_features, num_of_neurons) * np.sqrt(2.0 / num_of_input_features)
 
         print(f'W shape: {W.shape}')
         b = np.zeros((1,num_of_neurons))
         print(f'b shape: {b.shape}')
         
-        layer = NetworkLayer(w=W, b=b, activation_function=activation_function)
+        layer = NetworkLayer(w=W, b=b, num_of_neurons=num_of_neurons, activation_function=activation_function)
         self.layers.append(layer)
         
     def forward(self, X):
         for layer in self.layers:
             X = layer.forward(X)
-            self._forward_pass_res = np.append(self._forward_pass_res, X)
         return X
-    
-    def cross_entropy_loss(self, y, y_hat):
-        e = 1e-15
-        y_hat = np.clip(y_hat, e, 1-e)
-        self._cross_entropy_loss = -np.sum(y * np.log(y_hat)) / y.shape[0]
-        return self._cross_entropy_loss
+
+    def backward(self, y_hat, y):
         
+        # to be changed to address if the loss function is not cross entropy loss
+        if self.loss_function == 'cross_entropy':
+            delta_l = y_hat - y
+        else:
+            delta_l = 2 * (y_hat - y) / y.shape[0] # just add a default case for now
+             
+        for layer in reversed(self.layers):
+            delta_l = layer.backward(delta_l)
+            
+    def optimize(self):
+        self.optimizer.take_step(self.layers)
+        
+            
+            
+          
+            
