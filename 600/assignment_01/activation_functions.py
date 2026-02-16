@@ -52,16 +52,19 @@ class Softmax(ActivationFunction):
         return self._forward_store
     
     def backward(self, gradient_last_layer: np.ndarray) -> np.ndarray:
-        x = self._forward_store
-        # print(f'x shape: {x.shape}')
-        # print(f'gradient_last_layer shape: {gradient_last_layer.shape}')
         
-        if x.shape != gradient_last_layer.shape:
-            raise ValueError(f'Shape mismatch: x shape {x.shape} and gradient_last_layer shape {gradient_last_layer.shape} must be the same.')
+        # becasue a Softmax with cross entrpy loss has a gradient = y-y hast
+        return gradient_last_layer
+        # x = self._forward_store
+        # # print(f'x shape: {x.shape}')
+        # # print(f'gradient_last_layer shape: {gradient_last_layer.shape}')
+        
+        # if x.shape != gradient_last_layer.shape:
+        #     raise ValueError(f'Shape mismatch: x shape {x.shape} and gradient_last_layer shape {gradient_last_layer.shape} must be the same.')
         
         
-        wavg_last_gradient = np.sum(x * gradient_last_layer, axis=1, keepdims=True)
-        return x * (gradient_last_layer - wavg_last_gradient)
+        # wavg_last_gradient = np.sum(x * gradient_last_layer, axis=1, keepdims=True)
+        # return x * (gradient_last_layer - wavg_last_gradient)
         
 
     def backward_jacobian(self, gradient_last_layer: np.ndarray) -> np.ndarray:

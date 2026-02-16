@@ -12,8 +12,8 @@ class GradientDescent(Optimizer):
     
     def take_step(self, layers: list[NetworkLayer]):
         for layer in layers:
-            layer.w -= self.learning_rate * layer.dw
-            layer.b -= self.learning_rate * layer.db
+            layer.w -= self.learning_rate * layer.d_w
+            layer.b -= self.learning_rate * layer.d_b
             
             
 # class BatchGradientDescent(Optimizer):
@@ -23,5 +23,5 @@ class GradientDescent(Optimizer):
     
 #     def take_step(self, layers: list[NetworkLayer]):
 #         for layer in layers:
-#             layer.w -= self.learning_rate * layer.dw
-#             layer.b -= self.learning_rate * layer.db
+#             layer.w -= self.learning_rate * layer.d_w
+#             layer.b -= self.learning_rate * layer.d_b

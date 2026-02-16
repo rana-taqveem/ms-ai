@@ -46,6 +46,7 @@ class NeuralNetwork:
         for layer in reversed(self.layers):
             delta_l = layer.backward(delta_l)
             
+        
     def optimize(self):
         self.optimizer.take_step(self.layers)
         
@@ -56,7 +57,29 @@ class NeuralNetwork:
         accuracy = np.mean(predictions == labels)
         return accuracy
         
+    def compute_feature_importance(self, X, y, use_winning_class):
+        y_hat = self.forward(X)
+        
+        if use_winning_class:
+            # for winning classes as define in sec 2.8
+            winning_class_indices = np.argmax(y_hat, axis=1)
+            #print(winning_class_indices)
+            delta_l = np.zeros(y_hat)
+            delta_l[range(len(winning_class_indices)), winning_class_indices] = 1.0
+        else:
+            if self.loss_function == 'cross_entropy':
+                delta_l = y_hat - y
+            else:
+                delta_l = 2 * (y_hat - y) / y.shape[0] # just add a default case for now
+                
+        for layer in reversed(self.layers):
+            delta_l = layer.backward(delta_l)
             
+        g = np.mean(np.abs(delta_l), axis=0)
+        dir = np.sign(-delta_l)
             
+        ranked_features = np.argsort(g)[::-1]
+        
+        return ranked_features, g, dir
           
             

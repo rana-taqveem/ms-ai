@@ -1,5 +1,15 @@
 import numpy as np
 
+class LossFunction(ABC):
+    
+    @abstractmethod
+    def compute_loss(self, y, y_hat):
+        pass
+
+    @abstractmethod
+    def compute_gradient(self, y, y_hat) -> np.ndarray:
+        pass
+    
 class CrossEntropyLoss:
     def __init__(self):
         self._loss = 0.0
