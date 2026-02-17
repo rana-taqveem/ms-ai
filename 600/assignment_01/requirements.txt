@@ -4,3 +4,5 @@ pandas
 category-encoders
 matplotlib
 seaborn
+tabulate
+torch

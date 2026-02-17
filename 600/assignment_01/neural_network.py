@@ -1,9 +1,11 @@
 import numpy as np
 from network_layer import NetworkLayer  
+from loss_functions import LossFunction
+from optimizers import Optimizer
 from activation_functions import ActivationFunction
 class NeuralNetwork:
     
-    def __init__(self, input_dimension, loss_function, optimizer, weight_initializer=None): 
+    def __init__(self, input_dimension, loss_function:LossFunction, optimizer:Optimizer, weight_initializer=None): 
         self.input_dimension = input_dimension
         self.loss_function = loss_function
         self.optimizer = optimizer
@@ -19,7 +21,8 @@ class NeuralNetwork:
             num_of_input_features = self.layers[-1].num_of_neurons
             
         if self.weight_initializer is not None:
-            W = self.weight_initializer(num_of_input_features, num_of_neurons)
+            scaling_factor = self.weight_initializer(num_of_input_features)
+            W = np.random.randn(num_of_input_features, num_of_neurons) * scaling_factor
         else:
             W = np.random.randn(num_of_input_features, num_of_neurons) * np.sqrt(2.0 / num_of_input_features)
 
@@ -38,11 +41,12 @@ class NeuralNetwork:
     def backward(self, y_hat, y):
         
         # to be changed to address if the loss function is not cross entropy loss
-        if self.loss_function == 'cross_entropy':
-            delta_l = y_hat - y
-        else:
-            delta_l = 2 * (y_hat - y) / y.shape[0] # just add a default case for now
-             
+        # if self.loss_function == 'cross_entropy':
+        #     delta_l = y_hat - y
+        # else:
+        #     delta_l = 2 * (y_hat - y) / y.shape[0] # just add a default case for now
+
+        delta_l = self.loss_function.compute_gradient(y, y_hat)
         for layer in reversed(self.layers):
             delta_l = layer.backward(delta_l)
             
@@ -64,17 +68,25 @@ class NeuralNetwork:
             # for winning classes as define in sec 2.8
             winning_class_indices = np.argmax(y_hat, axis=1)
             #print(winning_class_indices)
-            delta_l = np.zeros(y_hat)
+            delta_l = np.zeros_like(y_hat)
             delta_l[range(len(winning_class_indices)), winning_class_indices] = 1.0
+            print(delta_l.shape)
         else:
-            if self.loss_function == 'cross_entropy':
-                delta_l = y_hat - y
-            else:
-                delta_l = 2 * (y_hat - y) / y.shape[0] # just add a default case for now
+            # if self.loss_function == 'cross_entropy':
+            #     delta_l = y_hat - y
+            # else:
+            #     delta_l = 2 * (y_hat - y) / y.shape[0] # just add a default case for now
+            delta_l = self.loss_function.compute_gradient(y, y_hat)
+            for layer in reversed(self.layers):
+                delta_l = layer.backward(delta_l)
+                
+        print(delta_l.shape)
                 
         for layer in reversed(self.layers):
             delta_l = layer.backward(delta_l)
             
+        print(delta_l.shape)
+         
         g = np.mean(np.abs(delta_l), axis=0)
         dir = np.sign(-delta_l)
             

@@ -1,4 +1,5 @@
 import numpy as np
+from abc import ABC, abstractmethod
 
 class LossFunction(ABC):
     
@@ -10,7 +11,7 @@ class LossFunction(ABC):
     def compute_gradient(self, y, y_hat) -> np.ndarray:
         pass
     
-class CrossEntropyLoss:
+class CrossEntropyLoss(ABC):
     def __init__(self):
         self._loss = 0.0
     def compute_loss(self, y, y_hat):
@@ -21,3 +22,4 @@ class CrossEntropyLoss:
     
     def compute_gradient(self, y, y_hat):
         return y_hat - y
+    
