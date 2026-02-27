@@ -1,0 +1,11 @@
+numpy
+scikit-learn
+pandas
+category-encoders
+matplotlib
+seaborn
+tabulate
+torch
+torchvision
+scikit-image
+jupyterlab
